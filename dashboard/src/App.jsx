@@ -39,7 +39,7 @@ function App() {
       ]);
 
       if (!mRes.ok || !tRes.ok || !aRes.ok || !oRes.ok || !eRes.ok) {
-        throw new Error('Failed to fetch data from localhost:8000. Ensure the FastAPI server is running.');
+        throw new Error(`Failed to fetch data from ${API_BASE_URL}. Ensure the FastAPI server is running.`);
       }
 
       const mData = await mRes.json();
@@ -55,7 +55,7 @@ function App() {
       setEscalations(eData);
     } catch (err) {
       console.error(err);
-      setError(err.message);
+      setError(`Failed to fetch data from ${API_BASE_URL}. Ensure the FastAPI server is running.`);
     } finally {
       setLoading(false);
     }
@@ -112,7 +112,11 @@ function App() {
             <AlertCircle class="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
             <div>
               <span class="font-bold">Connection Error:</span> {error}
-              <p class="mt-1 text-xs text-red-300">Run `.venv\Scripts\uvicorn api.ingest:app --reload` to start the API server on port 8000.</p>
+              <p class="mt-1 text-xs text-red-300">
+                {API_BASE_URL.includes('localhost') 
+                  ? "Run '.venv\\Scripts\\uvicorn api.ingest:app --reload' to start the local API server on port 8000."
+                  : "If you just deployed to Render, the Free tier spins down after inactivity. Please wait 1–2 minutes for the service to spin back up, or check your Render logs."}
+              </p>
             </div>
           </div>
         )}
