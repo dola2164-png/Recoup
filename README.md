@@ -1,6 +1,3 @@
-<p align="center">
-  <alt="Recoup — root-cause revenue recovery for failed payments" width="100%">
-</p>
 
 <h1 align="center">Recoup</h1>
 <p align="center"><b>Root-Cause Revenue Recovery Agent for failed payments</b></p>
