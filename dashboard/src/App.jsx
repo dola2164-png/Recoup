@@ -26,6 +26,50 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Simulator Form States
+  const [simName, setSimName] = useState('Buildathon Judge');
+  const [simEmail, setSimEmail] = useState('judge@razorpay.com');
+  const [simPhone, setSimPhone] = useState('+919876543210');
+  const [simAmount, setSimAmount] = useState('1500');
+  const [simSegment, setSimSegment] = useState('retail');
+  const [simReason, setSimReason] = useState('the customer swiped the card but the bank didn\'t respond');
+  const [simulating, setSimulating] = useState(false);
+  const [simSuccess, setSimSuccess] = useState(false);
+
+  const handleSimulate = async (e) => {
+    e.preventDefault();
+    setSimulating(true);
+    setSimSuccess(false);
+    try {
+      const response = await fetch(`${API_BASE_URL}/webhook/razorpay`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'payment.failed',
+          id: `sim_${Math.random().toString(36).substring(2, 11)}`,
+          amount: parseFloat(simAmount) * 100, // convert INR to paise
+          currency: 'INR',
+          customer_phone: simPhone,
+          customer_email: simEmail,
+          raw_reason: simReason,
+          customer_segment: simSegment,
+          customer_name: simName
+        })
+      });
+      if (response.ok) {
+        setSimSuccess(true);
+        fetchData(); // reload dashboard metrics & tables instantly!
+      } else {
+        throw new Error('Simulation failed. Server returned an error.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setSimulating(false);
+    }
+  };
+
   const fetchData = async () => {
     setLoading(true);
     setError(null);
@@ -261,6 +305,13 @@ function App() {
             <span>Human Queue ({escalations.length})</span>
             {activeTab === 'human' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
           </button>
+          <button 
+            onClick={() => setActiveTab('simulator')}
+            class={`pb-3 transition relative ${activeTab === 'simulator' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>Webhook Simulator (Live Test)</span>
+            {activeTab === 'simulator' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
         </div>
 
         {/* Tabs Contents */}
@@ -428,6 +479,108 @@ function App() {
                   )}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {activeTab === 'simulator' && (
+            <div class="p-6 max-w-2xl mx-auto">
+              <h3 class="text-lg font-bold mb-2 text-zinc-100">Simulate Razorpay Webhook Failure</h3>
+              <p class="text-sm text-zinc-400 mb-6">
+                Fill in the details below to simulate a live `payment.failed` webhook event. 
+                Recoup will run it instantly through the recovery pipeline (Diagnose -> Decide -> Act -> Track).
+              </p>
+
+              {simSuccess && (
+                <div class="mb-6 bg-emerald-950/40 border border-emerald-800 text-emerald-200 p-4 rounded-xl flex items-center space-x-3 text-sm">
+                  <CheckCircle class="h-5 w-5 text-emerald-400 shrink-0" />
+                  <div>
+                    <span class="font-bold">Success!</span> Webhook simulated successfully. Check the <strong>Audit Log Trail</strong> or <strong>All Transactions</strong> tabs to see the live results!
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSimulate} class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Customer Name</label>
+                    <input 
+                      type="text" 
+                      value={simName}
+                      onChange={(e) => setSimName(e.target.value)}
+                      required
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Customer Email</label>
+                    <input 
+                      type="email" 
+                      value={simEmail}
+                      onChange={(e) => setSimEmail(e.target.value)}
+                      required
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Phone Number</label>
+                    <input 
+                      type="text" 
+                      value={simPhone}
+                      onChange={(e) => setSimPhone(e.target.value)}
+                      required
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Customer Segment</label>
+                    <select 
+                      value={simSegment}
+                      onChange={(e) => setSimSegment(e.target.value)}
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    >
+                      <option value="retail">Retail (Hinglish Nudges)</option>
+                      <option value="business">Business (English Nudges)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Amount (INR)</label>
+                    <input 
+                      type="number" 
+                      value={simAmount}
+                      onChange={(e) => setSimAmount(e.target.value)}
+                      required
+                      min="1"
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    />
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Failure Reason (Ambiguous Text / Known Code)</label>
+                    <input 
+                      type="text" 
+                      value={simReason}
+                      onChange={(e) => setSimReason(e.target.value)}
+                      required
+                      placeholder="e.g. Card expired or bank server timed out"
+                      class="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none transition"
+                    />
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={simulating}
+                  class="w-full flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-black py-3 rounded-xl text-sm font-semibold transition disabled:opacity-50 mt-4"
+                >
+                  <RefreshCw class={`h-4 w-4 ${simulating ? 'animate-spin' : ''}`} />
+                  <span>{simulating ? 'Processing Webhook Recovery...' : 'Send Simulation Webhook'}</span>
+                </button>
+              </form>
             </div>
           )}
         </div>
