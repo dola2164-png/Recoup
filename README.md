@@ -119,25 +119,37 @@ We built a **Live Webhook Simulator** directly into the home page:
 
 ## Pipeline Architecture
 
+Every stage writes to the same append-only audit log before the next stage reads from it. Only two nodes ever call an LLM — everything that touches money or limits (`Decide`) is plain, reproducible Python.
+
 ```mermaid
 graph TD
     A[Razorpay Webhook Event] --> B(Ingest: Normalization & Save)
     B --> C{Diagnose: Known Code?}
-    C -- Yes Rule Match --> D[Root Cause, e.g. insufficient_funds]
-    C -- No / Ambiguous --> E[Groq Fallback Classifier]
+    C -- Yes, Rule Match --> D[Root Cause Identified, e.g. insufficient_funds]
+    C -- No / Ambiguous --> E["🤖 Groq Fallback Classifier — AI"]
     E --> D
-    D --> F[Decide: Deterministic State Machine]
+    D --> F["Decide: Deterministic State Machine — Rules only, no LLM"]
     F --> G{Spend / Retry Caps OK?}
-    G -- Limit Hit --> H[Escalate to Human Queue & Block]
+    G -- Limit Hit --> H["Escalate to Human Queue & Block — Hard stop"]
     G -- Under Limit --> I[Act: Execute Intervention]
     I -- instant_retry --> J[Razorpay Order API]
-    I -- whatsapp_nudge --> K[Groq Copywriter: Hinglish / English]
+    I -- whatsapp_nudge --> K["🤖 Groq Copywriter: Hinglish / English — AI"]
     I -- other --> L[Mock Payment Link / EMI Reschedule]
     K --> M[WhatsApp Outbox]
     J --> N[Track: Append to Central Audit Log]
     L --> N
     K --> N
+
+    classDef ai fill:#17A673,stroke:#0d5c40,color:#fff,stroke-width:1px;
+    classDef rules fill:#F0A202,stroke:#8a5f00,color:#111,stroke-width:1px;
+    classDef stop fill:#D9634A,stroke:#8a3624,color:#fff,stroke-width:1px;
+
+    class E,K ai;
+    class F rules;
+    class H stop;
 ```
+
+**Legend:** 🟩 AI / LLM call (Groq) · 🟧 deterministic rules only — no LLM in this step · 🟥 hard stop → human handoff
 
 ---
 
