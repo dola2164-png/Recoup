@@ -1,8 +1,36 @@
 # Recoup — Root-Cause Revenue Recovery Agent
 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-Orange?style=for-the-badge&logo=groq&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+
 Submission for the **Razorpay Buildathon — AI Revenue Recovery Track**.
 
 Recoup is an autonomous revenue recovery agent pipeline that detects failed or at-risk transactions, diagnoses the failure root cause, executes bounded recovery interventions (retries, localized WhatsApp reminders), tracks outcomes in a central append-only audit trail, and escalates unresolved cases to a human review queue.
+
+---
+
+## ⚡ Live Deployments & Instant Testing
+
+### 🔗 Production Links
+* 🌐 **Live Dashboard (Frontend)**: [https://recoup-seven-omega.vercel.app](https://recoup-seven-omega.vercel.app)
+* ⚙️ **Production API (Backend)**: [https://recoup-9wrh.onrender.com](https://recoup-9wrh.onrender.com)
+* 🗄️ **Production Database**: Neon Serverless Postgres Cloud
+* 🐙 **GitHub Repository**: [https://github.com/dola2164-png/Recoup](https://github.com/dola2164-png/Recoup)
+
+### 🧪 How Judges Can Test Live in 30 Seconds (No Code/Setup Required)
+We have built a **Live Webhook Simulator** directly into the home page of the website:
+1. Open the [Live Dashboard](https://recoup-seven-omega.vercel.app) (runs in Razorpay-inspired light fintech theme).
+2. On the **Home** tab, locate the **Simulate Razorpay Webhook Failure** form.
+3. Fill out the details (e.g., Customer Name, Amount, Failure Reason) and click **Send Simulation Webhook**.
+4. Click **Audit Log Trail** in the header to view the live execution logs of the recovery pipeline in real time.
+5. Click **WhatsApp Outbox** in the header to see the personalized English/Hinglish copy drafted for the customer.
+6. Click **All Transactions** to inspect the overall metrics and transaction recovery status.
+
+---
 
 ## Pipeline Architecture Flow
 
@@ -28,27 +56,26 @@ graph TD
 
 ---
 
-## Architecture and Design Decisions
+## Core Product Capabilities
 
-### 1. Crucial Rule: Strict AI-vs-Rules Split
-This project implements a strict division between generative/heuristic AI decisions and deterministic control logic:
-- **Where we USE AI (via Groq)**:
-  - **Fallback Diagnosis**: Classifying ambiguous or free-text failure messages (e.g. *"bank timed out connecting to cardholder"* or *"declined by issuer due to no credit remaining"*) into standard codes.
-  - **Copywriting**: Drafting personalized WhatsApp notification copies in natural **Hinglish** (for retail customer segments) and professional **English** (for SMB/Enterprise).
-- **Where we NEVER use AI (Deterministic Code)**:
-  - Money-moving decisions, transaction routing logic, spend limits, retry caps, and stop/opt-out rules are kept entirely in plain Python (`decide.py`).
-  - This ensures 100% auditability, reproducibility, and prevents hallucinated routing or budget bypasses.
+### 🛡️ 1. Strict AI-vs-Rules Design Split
+This project enforces a secure division between generative/heuristic AI decisions and deterministic execution rules:
+* **Where AI is Leveraged**:
+  * **Fallback Diagnosis**: Classifying highly ambiguous or free-text failure logs (e.g. *"bank server timed out connecting to cardholder"* or *"declined by issuer due to no credit remaining"*) into standard operational codes.
+  * **Personalized Copywriting**: Drafting tailored WhatsApp billing reminders in **Hinglish** (for retail customers) and professional **English** (for business/SMB partners).
+* **Where Code is 100% Deterministic (Rules Engine)**:
+  * Budget routing, retry limits, payment options, intervention rules, and human escalation boundaries are written strictly in python (`decide.py`).
+  * Prevents AI hallucination, accidental double-charges, budget bypasses, and security exploits.
 
-### 2. Groq Production Models Used
-Groq's lineup was queried dynamically to ensure current production models are used:
-- **Classifier Model**: `openai/gpt-oss-120b` (Large, high-reasoning general-purpose model for classification accuracy).
-- **Drafting Model**: `openai/gpt-oss-20b` (Smaller, low-latency model for message copy generation).
-
-Both models are run with a **5.0-second timeout** and a catch-all fallback path to `'needs_human_review'` to prevent pipeline blockages.
+### 2. High-Performance Groq LLM Invasions
+Groq APIs are queried dynamically to deliver low-latency responses:
+* **Classifier Model**: `openai/gpt-oss-120b` (Large, high-reasoning general-purpose model for classification accuracy).
+* **Drafting Model**: `openai/gpt-oss-20b` (Smaller, low-latency model for message copy generation).
+* Both models run under a **5.0-second timeout limit** with built-in fallbacks to `needs_human_review` to prevent pipeline blockages.
 
 ---
 
-## Evaluation Performance Metrics
+## 📈 Evaluation Performance Metrics
 
 The pipeline was run against a synthetic batch of **52 transaction failures** spanning card declines, checkout abandonments, subscription failures, and overdue receivables.
 
@@ -63,72 +90,67 @@ The pipeline was run against a synthetic batch of **52 transaction failures** sp
 | **Classifier Accuracy (Rules + Groq)** | **98.08%** |
 
 ### Audit Log Actor Counts
-- **RULE**: 216 invocations (States, spend caps, retry limits)
-- **AI**: 72 invocations (Groq text classification, Hinglish message drafting)
-- **HUMAN**: 17 invocations (Simulated customer payments in response to nudges)
+* **RULE**: 216 invocations (States, spend caps, retry limits)
+* **AI**: 72 invocations (Groq text classification, Hinglish message drafting)
+* **HUMAN**: 17 invocations (Simulated customer payments in response to nudges)
 
 ---
 
-## How to Run the Project Locally
+## 💻 Local Setup & Development
+
+If you prefer to run the project locally on your machine, follow these steps:
 
 ### Prerequisites
-- Python 3.12+
-- Node.js v18+ and npm v9+
-- A valid Groq API Key and Razorpay Test Key pair (configured in `.env`)
+* Python 3.12+
+* Node.js v18+ and npm v9+
+* A valid Groq API Key and Razorpay Test Key pair
 
-### Setup and Installation
+### Environment Configuration
+Create a `.env` file in the root directory (based on `.env.example`):
+```env
+GROQ_API_KEY=gsk_your_groq_key_here
+RAZORPAY_KEY_ID=rzp_test_your_key_here
+RAZORPAY_KEY_SECRET=your_secret_here
+DATABASE_URL=postgresql://user:pass@host:port/dbname  # or local sqlite:///recoup.db
+```
 
-1. **Clone and Configure**:
-   Create a `.env` file in the root directory (copy from `.env.example`):
-   ```env
-   GROQ_API_KEY=gsk_your_groq_key_here
-   RAZORPAY_KEY_ID=rzp_test_your_key_here
-   RAZORPAY_KEY_SECRET=your_secret_here
-   DATABASE_URL=sqlite:///recoup.db
-   ```
-
-2. **Initialize Python Environment**:
+### Installation
+1. **Initialize Python Backend**:
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate
+   .venv\Scripts\activate   # On Windows (use source .venv/bin/activate on macOS/Linux)
    pip install -r requirements.txt
-   python api/db.py
+   python api/db.py          # Initialize local DB tables
    ```
 
-3. **Initialize Dashboard Frontend**:
+2. **Initialize Frontend Dashboard**:
    ```bash
    cd dashboard
    npm install
    cd ..
    ```
 
-### Running the Services
-
-To view the system running on localhost:
-
-1. **Start the FastAPI Backend** (Port 8000):
+### Running Locally
+1. **Start Backend Server**:
    ```bash
    .venv\Scripts\uvicorn api.ingest:app --reload --port 8000
    ```
-
-2. **Start the React Dashboard** (Port 5173):
+2. **Start Frontend Dev Server**:
    ```bash
    cd dashboard
    npm run dev
    ```
-   Open [http://localhost:5173](http://localhost:5173) in your browser to view the real-time KPI metrics, audit logs, outbox messages, and recovery charts.
+   Open `http://localhost:5173` in your browser.
 
-3. **Run the Evaluation Script**:
-   To populate the database and run the 52-record batch simulation:
+3. **Run Pipeline Evaluations**:
+   To populate your local DB and test the 52-record batch simulation run:
    ```bash
    .venv\Scripts\python -m eval.run_eval
    ```
 
 4. **Run Unit Tests**:
+   Ensure rules and classifiers behave predictably:
    ```bash
    .venv\Scripts\python -m pytest tests/test_decide.py
    .venv\Scripts\python -m pytest tests/test_diagnose.py
    ```
-
-5. **Run Staged Failure Demos**:
-   See [demo/staged_failure.md](file:///C:/Users/adaks/.gemini/antigravity/scratch/recoup/demo/staged_failure.md) for reproducible scripts demonstrating retry caps and API error resilience.
