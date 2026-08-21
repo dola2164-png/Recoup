@@ -122,65 +122,22 @@ function App() {
   return (
     <div class="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       {/* Header */}
-      <header class="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur sticky top-0 z-30 px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <header class="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <div class="bg-emerald-500 text-black p-2 rounded-lg font-bold text-lg tracking-wider">
             RE
           </div>
           <div>
-            <h1 class="text-xl font-bold tracking-tight flex items-center space-x-2">
-              <span>Recoup</span>
-              <span class="text-zinc-600 font-normal">/</span>
-              <span class="text-emerald-400 font-bold text-sm bg-emerald-950/40 border border-emerald-800 px-2 py-0.5 rounded-md">Home</span>
-            </h1>
+            <h1 class="text-xl font-bold tracking-tight">Recoup</h1>
             <p class="text-xs text-zinc-400">Razorpay Revenue Recovery Pipeline</p>
           </div>
         </div>
-
-        {/* Center Navigation Tabs */}
-        <div class="flex items-center space-x-4 md:space-x-6 text-sm font-bold overflow-x-auto py-1 md:py-0 no-scrollbar">
-          <button 
-            onClick={() => setActiveTab('logs')}
-            class={`pb-1 md:pb-0 transition relative shrink-0 ${activeTab === 'logs' ? 'text-emerald-400 font-black' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Audit Log Trail</span>
-            {activeTab === 'logs' && <span class="hidden md:block absolute -bottom-5.5 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('txns')}
-            class={`pb-1 md:pb-0 transition relative shrink-0 ${activeTab === 'txns' ? 'text-emerald-400 font-black' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>All Transactions ({transactions.length})</span>
-            {activeTab === 'txns' && <span class="hidden md:block absolute -bottom-5.5 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('outbox')}
-            class={`pb-1 md:pb-0 transition relative shrink-0 ${activeTab === 'outbox' ? 'text-emerald-400 font-black' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>WhatsApp Outbox ({outbox.length})</span>
-            {activeTab === 'outbox' && <span class="hidden md:block absolute -bottom-5.5 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('human')}
-            class={`pb-1 md:pb-0 transition relative shrink-0 ${activeTab === 'human' ? 'text-emerald-400 font-black' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Human Queue ({escalations.length})</span>
-            {activeTab === 'human' && <span class="hidden md:block absolute -bottom-5.5 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('simulator')}
-            class={`pb-1 md:pb-0 transition relative shrink-0 ${activeTab === 'simulator' ? 'text-emerald-400 font-black' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Webhook Simulator (Live Test)</span>
-            {activeTab === 'simulator' && <span class="hidden md:block absolute -bottom-5.5 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-        </div>
         
-        <div class="flex items-center justify-between md:justify-end space-x-4">
+        <div class="flex items-center space-x-4">
           <button 
             onClick={fetchData} 
             disabled={loading}
-            class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 border border-zinc-700 px-4.5 py-2 rounded-lg text-sm font-bold transition disabled:opacity-50"
+            class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 border border-zinc-700 px-4.5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-50"
           >
             <RefreshCw class={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
@@ -318,7 +275,44 @@ function App() {
           </div>
         </div>
 
-
+        {/* Tab Selection */}
+        <div class="border-b border-zinc-800 flex space-x-6 text-sm font-medium">
+          <button 
+            onClick={() => setActiveTab('logs')}
+            class={`pb-3 transition relative ${activeTab === 'logs' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>Audit Log Trail</span>
+            {activeTab === 'logs' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
+          <button 
+            onClick={() => setActiveTab('txns')}
+            class={`pb-3 transition relative ${activeTab === 'txns' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>All Transactions ({transactions.length})</span>
+            {activeTab === 'txns' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
+          <button 
+            onClick={() => setActiveTab('outbox')}
+            class={`pb-3 transition relative ${activeTab === 'outbox' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>WhatsApp Outbox ({outbox.length})</span>
+            {activeTab === 'outbox' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
+          <button 
+            onClick={() => setActiveTab('human')}
+            class={`pb-3 transition relative ${activeTab === 'human' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>Human Queue ({escalations.length})</span>
+            {activeTab === 'human' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
+          <button 
+            onClick={() => setActiveTab('simulator')}
+            class={`pb-3 transition relative ${activeTab === 'simulator' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+          >
+            <span>Webhook Simulator (Live Test)</span>
+            {activeTab === 'simulator' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+          </button>
+        </div>
 
         {/* Tabs Contents */}
         <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
