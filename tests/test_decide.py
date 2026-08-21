@@ -1,3 +1,14 @@
+import os
+import sys
+
+# Force local unit tests to use SQLite
+os.environ["DATABASE_URL"] = "sqlite:///recoup.db"
+
+# Add project root to Python search path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from api.decide import decide_intervention
 
 def test_retry_cap_exceeded():

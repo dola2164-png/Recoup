@@ -1,6 +1,16 @@
 import os
+import sys
 import json
 import sqlite3
+
+# Force local evaluation to use SQLite to prevent hitting Neon Cloud connection limits
+os.environ["DATABASE_URL"] = "sqlite:///recoup.db"
+
+# Add project root to Python search path so it can import api modules
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from fastapi.testclient import TestClient
 from api.ingest import app
 from api.db import get_db_connection, init_db, get_db_cursor

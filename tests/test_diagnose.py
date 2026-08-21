@@ -1,5 +1,15 @@
 import pytest
 import os
+import sys
+
+# Force local unit tests to use SQLite
+os.environ["DATABASE_URL"] = "sqlite:///recoup.db"
+
+# Add project root to Python search path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from unittest.mock import patch
 from api.db import get_db_connection, init_db
 from api.diagnose import diagnose_transaction, classify_with_groq

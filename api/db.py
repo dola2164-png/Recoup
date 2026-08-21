@@ -15,23 +15,28 @@ def get_db_connection():
     if db_url.startswith("postgres://") or db_url.startswith("postgresql://"):
         try:
             import psycopg2
-        except ImportError:
-            raise ImportError(
-                "psycopg2 is required to connect to PostgreSQL (Neon). Please run this command in your terminal:\n"
-                ".venv\\Scripts\\pip install psycopg2-binary"
+            # Parse PostgreSQL URL
+            url = urlparse(db_url)
+            conn = psycopg2.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port or 5432,
+                sslmode="require"
             )
-        
-        # Parse PostgreSQL URL
-        url = urlparse(db_url)
-        conn = psycopg2.connect(
-            database=url.path[1:],
-            user=url.username,
-            password=url.password,
-            host=url.hostname,
-            port=url.port or 5432,
-            sslmode="require"
-        )
-        return conn
+            return conn
+        except ImportError:
+            print("Warning: psycopg2-binary not installed. Falling back to local SQLite.")
+            conn = sqlite3.connect(DATABASE_PATH)
+            conn.row_factory = sqlite3.Row
+            return conn
+        except Exception as e:
+            print(f"\n[Database Warning] PostgreSQL connection to Neon Cloud failed: {e}")
+            print("Falling back to local SQLite database (recoup.db) for this session.\n")
+            conn = sqlite3.connect(DATABASE_PATH)
+            conn.row_factory = sqlite3.Row
+            return conn
     else:
         # SQLite fallback
         conn = sqlite3.connect(DATABASE_PATH)
@@ -47,6 +52,8 @@ class DBCursorWrapper:
         if self.is_postgres and isinstance(query, str):
             # Replace SQLite '?' placeholder with PostgreSQL '%s'
             query = query.replace("?", "%s")
+        if vars is None:
+            return self.cursor.execute(query)
         return self.cursor.execute(query, vars)
         
     def __getattr__(self, name):
