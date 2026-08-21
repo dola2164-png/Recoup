@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">Recoup</h1>
-<p align="center"><b>Root-Cause Revenue Recovery Agent</b></p>
+<p align="center"><b>Root-Cause Revenue Recovery Agent for failed payments</b></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
