@@ -188,7 +188,7 @@ function App() {
       </header>
 
       {/* Main Content Area */}
-      <main class="flex-grow p-6 space-y-4 max-w-7xl mx-auto w-full flex flex-col overflow-hidden">
+      <main class="flex-grow p-6 space-y-4 max-w-7xl mx-auto w-full flex flex-col overflow-hidden min-h-0">
         {error && (
           <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl flex items-start space-x-3 text-sm shrink-0 shadow-sm">
             <AlertCircle class="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
@@ -428,9 +428,9 @@ function App() {
 
         {/* DATA PAGES: Fullscreen Tables */}
         {activeTab !== 'home' && (
-          <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden flex-grow flex flex-col shadow-sm">
+          <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden flex-grow flex flex-col shadow-sm min-h-0">
             {activeTab === 'logs' && (
-              <div class="overflow-auto flex-grow max-h-full">
+              <div class="overflow-y-auto flex-grow min-h-0">
                 <table class="w-full text-left border-collapse text-sm text-slate-700">
                   <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
@@ -481,7 +481,7 @@ function App() {
             )}
 
             {activeTab === 'txns' && (
-              <div class="overflow-auto flex-grow max-h-full">
+              <div class="overflow-y-auto flex-grow min-h-0">
                 <table class="w-full text-left border-collapse text-sm text-slate-700">
                   <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
@@ -530,7 +530,7 @@ function App() {
             )}
 
             {activeTab === 'outbox' && (
-              <div class="overflow-auto flex-grow max-h-full">
+              <div class="overflow-y-auto flex-grow min-h-0">
                 <table class="w-full text-left border-collapse text-sm text-slate-700">
                   <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
@@ -561,7 +561,7 @@ function App() {
             )}
 
             {activeTab === 'human' && (
-              <div class="overflow-auto flex-grow max-h-full">
+              <div class="overflow-y-auto flex-grow min-h-0">
                 <table class="w-full text-left border-collapse text-sm text-slate-700">
                   <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
