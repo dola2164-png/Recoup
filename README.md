@@ -91,11 +91,11 @@ We built a **Live Webhook Simulator** directly into the home page:
 
 ## Screenshots
 
-> Drop your captures from the flow above into `assets/screenshots/` (same file names as below) and they'll render here automatically — this keeps the four images in sync with the exact judging flow.
 
 | Home — Webhook Simulator | Audit Log Trail |
 |:---:|:---:|
-| ![Home / Simulator](assets/screenshots/home-simulator.png) | ![Audit Log Trail](assets/screenshots/audit-log.png) |
+| ![Home / Simulator](<img width="920" height="400" alt="Screenshot (661)" src="https://github.com/user-attachments/assets/41ea1791-9d47-4863-9d41-3f91ce65b6da" />
+) | ![Audit Log Trail](assets/screenshots/audit-log.png) |
 
 | WhatsApp Outbox | All Transactions |
 |:---:|:---:|
