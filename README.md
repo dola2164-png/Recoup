@@ -1,4 +1,3 @@
-
 <h1 align="center">Recoup</h1>
 <p align="center"><b>Root-Cause Revenue Recovery Agent for failed payments</b></p>
 
@@ -181,7 +180,7 @@ recoup/
 │   ├── public/
 │   │   └── logo.png        # Brand header logo
 │   ├── src/
-│   │   ├── App.jsx         # Fintech dashboard panel (KPIs, simulator, data tables)
+│   │   ├── App.jsx         # Complete Fintech Dashboard panel (KPIs, simulator, data tables)
 │   │   ├── index.css        # Custom styling & scrollbar constraints
 │   │   └── main.jsx         # App entrypoint
 │   ├── index.html
@@ -312,7 +311,8 @@ Open `http://localhost:5173` in your browser.
 
 **3. Run the pipeline evaluation** (populates your local DB with the 52-record batch)
 ```bash
-python -m eval.run_eval
+.venv\Scripts\python eval/run_eval.py       # Windows
+python eval/run_eval.py                     # macOS/Linux
 ```
 
 **4. Run unit tests**
