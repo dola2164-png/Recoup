@@ -181,9 +181,8 @@ function App() {
             <RefreshCw class={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
           </button>
-          <div class="flex items-center space-x-2 text-xs text-slate-500">
+          <div class="flex items-center text-xs text-slate-500" title="API Connected">
             <span class="inline-block w-2.5 h-2.5 bg-blue-600 rounded-full animate-pulse"></span>
-            <span>API Online</span>
           </div>
         </div>
       </header>
