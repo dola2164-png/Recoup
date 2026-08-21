@@ -7,12 +7,12 @@ This file records the actual execution metrics of the Recoup revenue recovery pi
 | Metric | Value |
 | :--- | :--- |
 | **Total Transactions** | 52 |
-| **Recovered Transactions** | 33 (63.46%) |
-| **Escalated Transactions** | 19 (36.54%) |
+| **Recovered Transactions** | 32 (61.54%) |
+| **Escalated Transactions** | 20 (38.46%) |
 | **Total At-Risk Revenue** | INR 2,358,150.00 |
-| **Recovered Revenue** | INR 651,850.00 (27.64%) |
+| **Recovered Revenue** | INR 561,850.00 (23.83%) |
 | **Average Touches to Recovery** | 1.06 |
-| **Classifier Accuracy (Rules + Groq)** | 98.08% |
+| **Classifier Accuracy (Rules + Groq)** | 96.15% |
 
 ## Audit Trail and Actor Split
 
@@ -20,9 +20,9 @@ The audit trail logging records every decision along with the executing actor (`
 
 | Actor | Action Count | Description |
 | :--- | :--- | :--- |
-| **RULE** | 215 | Executed deterministic code lookups, spend limits, retry caps, and state machine transitions. |
-| **AI** | 73 | Executed Groq `llama-3.3-70b-versatile` fallback classification on ambiguous/free-text failure reasons. |
-| **HUMAN** | 18 | Simulates final payment recovery resolution by customer action (e.g. paying after a nudge). |
+| **RULE** | 213 | Executed deterministic code lookups, spend limits, retry caps, and state machine transitions. |
+| **AI** | 71 | Executed Groq `llama-3.3-70b-versatile` fallback classification on ambiguous/free-text failure reasons. |
+| **HUMAN** | 17 | Simulates final payment recovery resolution by customer action (e.g. paying after a nudge). |
 
 ## Analysis & Observations
 

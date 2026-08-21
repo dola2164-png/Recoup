@@ -1,8 +1,9 @@
 import os
 import sys
 
-# Force local unit tests to use SQLite
-os.environ["DATABASE_URL"] = "sqlite:///recoup.db"
+# Force local unit tests to use SQLite if not already configured
+if "DATABASE_URL" not in os.environ:
+    os.environ["DATABASE_URL"] = "sqlite:///recoup.db"
 
 # Add project root to Python search path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
