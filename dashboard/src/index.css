@@ -17,3 +17,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #1d4ed8;
 }
+
+/* Hide scrollbar utility for navigation/headers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
