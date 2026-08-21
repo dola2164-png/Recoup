@@ -120,15 +120,19 @@ function App() {
   };
 
   return (
-    <div class="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
+    <div class="h-screen max-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black overflow-hidden">
       {/* Header */}
-      <header class="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+      <header class="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur sticky top-0 z-30 px-6 py-3 flex items-center justify-between shrink-0">
         <div class="flex items-center space-x-3">
           <div class="bg-emerald-500 text-black p-2 rounded-lg font-bold text-lg tracking-wider">
             RE
           </div>
           <div>
-            <h1 class="text-xl font-bold tracking-tight">Recoup</h1>
+            <h1 class="text-xl font-bold tracking-tight flex items-center space-x-2">
+              <span>Recoup</span>
+              <span class="text-zinc-600 font-normal">/</span>
+              <span class="text-emerald-400 font-bold text-sm bg-emerald-950/40 border border-emerald-800 px-2 py-0.5 rounded-md">Home</span>
+            </h1>
             <p class="text-xs text-zinc-400">Razorpay Revenue Recovery Pipeline</p>
           </div>
         </div>
@@ -150,9 +154,9 @@ function App() {
       </header>
 
       {/* Main Content Area */}
-      <main class="flex-grow p-6 space-y-6 max-w-7xl mx-auto w-full">
+      <main class="flex-grow p-6 space-y-4 max-w-7xl mx-auto w-full flex flex-col overflow-hidden">
         {error && (
-          <div class="bg-red-950/40 border border-red-800 text-red-200 p-4 rounded-xl flex items-start space-x-3 text-sm">
+          <div class="bg-red-950/40 border border-red-800 text-red-200 p-4 rounded-xl flex items-start space-x-3 text-sm shrink-0">
             <AlertCircle class="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
             <div>
               <span class="font-bold">Connection Error:</span> {error}
@@ -166,158 +170,167 @@ function App() {
         )}
 
         {/* KPI Cards */}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
           {/* Card 1 */}
-          <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between">
+          <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between text-zinc-400">
-              <span class="text-sm font-medium">Total At-Risk</span>
-              <DollarSign class="h-5 w-5 text-zinc-500" />
+              <span class="text-xs font-semibold uppercase tracking-wider">Total At-Risk</span>
+              <DollarSign class="h-4 w-4 text-zinc-500" />
             </div>
-            <div class="mt-4">
-              <div class="text-2xl font-bold tracking-tight">{formatCurrency(metrics.total_revenue)}</div>
-              <p class="text-xs text-zinc-400 mt-1">{metrics.total_transactions} transactions failed</p>
+            <div class="mt-2">
+              <div class="text-xl font-bold tracking-tight">{formatCurrency(metrics.total_revenue)}</div>
+              <p class="text-[10px] text-zinc-400 mt-0.5">{metrics.total_transactions} transactions failed</p>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between">
+          <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between text-zinc-400">
-              <span class="text-sm font-medium text-emerald-400">Recovered Revenue</span>
-              <CheckCircle class="h-5 w-5 text-emerald-500" />
+              <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Recovered Revenue</span>
+              <CheckCircle class="h-4 w-4 text-emerald-500" />
             </div>
-            <div class="mt-4">
-              <div class="text-2xl font-bold tracking-tight text-emerald-400">{formatCurrency(metrics.recovered_revenue)}</div>
-              <p class="text-xs text-zinc-400 mt-1">{metrics.recovered_transactions} cases resolved successfully</p>
+            <div class="mt-2">
+              <div class="text-xl font-bold tracking-tight text-emerald-400">{formatCurrency(metrics.recovered_revenue)}</div>
+              <p class="text-[10px] text-zinc-400 mt-0.5">{metrics.recovered_transactions} cases resolved successfully</p>
             </div>
           </div>
 
           {/* Card 3 */}
-          <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between">
+          <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between text-zinc-400">
-              <span class="text-sm font-medium">Recovery Rate</span>
-              <Activity class="h-5 w-5 text-emerald-400" />
+              <span class="text-xs font-semibold uppercase tracking-wider">Recovery Rate</span>
+              <Activity class="h-4 w-4 text-emerald-400" />
             </div>
-            <div class="mt-4">
-              <div class="text-2xl font-bold tracking-tight">{metrics.recovery_rate}%</div>
-              <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-2">
-                <div class="bg-emerald-500 h-1.5 rounded-full" style={{ width: `${metrics.recovery_rate}%` }}></div>
+            <div class="mt-2">
+              <div class="text-xl font-bold tracking-tight">{metrics.recovery_rate}%</div>
+              <div class="w-full bg-zinc-800 rounded-full h-1 mt-1.5">
+                <div class="bg-emerald-500 h-1 rounded-full" style={{ width: `${metrics.recovery_rate}%` }}></div>
               </div>
             </div>
           </div>
 
           {/* Card 4 */}
-          <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between">
+          <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col justify-between">
             <div class="flex items-center justify-between text-zinc-400">
-              <span class="text-sm font-medium text-red-400">Escalated to Human</span>
-              <ShieldAlert class="h-5 w-5 text-red-500" />
+              <span class="text-xs font-semibold uppercase tracking-wider text-red-400">Escalated to Human</span>
+              <ShieldAlert class="h-4 w-4 text-red-500" />
             </div>
-            <div class="mt-4">
-              <div class="text-2xl font-bold tracking-tight text-red-400">{metrics.escalated_transactions}</div>
-              <p class="text-xs text-zinc-400 mt-1">Requires manual intervention</p>
+            <div class="mt-2">
+              <div class="text-xl font-bold tracking-tight text-red-400">{metrics.escalated_transactions}</div>
+              <p class="text-[10px] text-zinc-400 mt-0.5">Requires manual intervention</p>
             </div>
           </div>
         </div>
 
-        {/* Chart + Summary Segment */}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl lg:col-span-2 flex flex-col justify-between">
-            <div>
-              <h2 class="text-base font-bold">Recovery Performance Overview</h2>
-              <p class="text-xs text-zinc-400 mt-1">Status of all failed payments ingested by Recoup</p>
-            </div>
-            <div class="h-56 mt-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} layout="vertical" margin={{ left: 10, right: 30, top: 10, bottom: 10 }}>
-                  <XAxis type="number" stroke="#52525b" fontSize={12} tickLine={false} />
-                  <YAxis dataKey="name" type="category" stroke="#52525b" fontSize={12} tickLine={false} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px' }}
-                    labelStyle={{ color: '#a1a1aa', fontWeight: 'bold' }}
-                    itemStyle={{ color: '#f4f4f5' }}
-                  />
-                  <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={24}>
-                    {chartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col justify-between">
-            <div>
-              <h2 class="text-base font-bold">AI vs Rule Operations</h2>
-              <p class="text-xs text-zinc-400 mt-1">Determining the decision maker for interventions</p>
-            </div>
-            <div class="flex-grow flex items-center justify-center h-40">
-              <div class="text-center">
-                <span class="text-3xl font-extrabold tracking-tight text-zinc-300">{metrics.average_touches}</span>
-                <p class="text-xs text-zinc-400 mt-1">Average Touches to Recovery</p>
+        {/* Dynamic Workspace (Charts on Left, Logs/Simulator on Right) */}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow overflow-hidden">
+          {/* Left Column: Charts */}
+          <div class="lg:col-span-5 flex flex-col space-y-4 overflow-hidden h-full">
+            {/* Chart 1: Recovery Overview */}
+            <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between flex-grow overflow-hidden">
+              <div>
+                <h2 class="text-sm font-bold">Recovery Performance Overview</h2>
+                <p class="text-[10px] text-zinc-400 mt-0.5">Status of failed payments ingested by Recoup</p>
+              </div>
+              <div class="h-36 mt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} layout="vertical" margin={{ left: -10, right: 10, top: 0, bottom: 0 }}>
+                    <XAxis type="number" stroke="#52525b" fontSize={10} tickLine={false} />
+                    <YAxis dataKey="name" type="category" stroke="#52525b" fontSize={10} tickLine={false} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', fontSize: '11px' }}
+                      labelStyle={{ color: '#a1a1aa', fontWeight: 'bold' }}
+                      itemStyle={{ color: '#f4f4f5' }}
+                    />
+                    <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={16}>
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
-            <div class="border-t border-zinc-800 pt-4 space-y-2.5 text-xs">
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                  <span class="text-zinc-400">Rule Engine (Caps, States)</span>
+
+            {/* Chart 2: AI vs Rule */}
+            <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex flex-col justify-between shrink-0 h-44">
+              <div>
+                <h2 class="text-sm font-bold">AI vs Rule Operations</h2>
+                <p class="text-[10px] text-zinc-400 mt-0.5">Determining the decision maker for interventions</p>
+              </div>
+              <div class="flex-grow flex items-center justify-center py-2">
+                <div class="text-center">
+                  <span class="text-2xl font-extrabold tracking-tight text-zinc-300">{metrics.average_touches}</span>
+                  <p class="text-[10px] text-zinc-400 mt-0.5">Average Touches to Recovery</p>
                 </div>
-                <span class="font-bold text-zinc-200">100% Deterministic</span>
               </div>
-              <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-violet-500"></span>
-                  <span class="text-zinc-400">AI Fallback Classifications</span>
+              <div class="border-t border-zinc-800 pt-3 space-y-1.5 text-[11px]">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="text-zinc-400">Rule Engine (Caps, States)</span>
+                  </div>
+                  <span class="font-bold text-zinc-200">100% Deterministic</span>
                 </div>
-                <span class="font-bold text-zinc-200">Groq LLM Guard</span>
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-violet-500"></span>
+                    <span class="text-zinc-400">AI Fallback Classifications</span>
+                  </div>
+                  <span class="font-bold text-zinc-200">Groq LLM Guard</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Tab Selection */}
-        <div class="border-b border-zinc-800 flex space-x-6 text-sm font-medium">
-          <button 
-            onClick={() => setActiveTab('logs')}
-            class={`pb-3 transition relative ${activeTab === 'logs' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Audit Log Trail</span>
-            {activeTab === 'logs' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('txns')}
-            class={`pb-3 transition relative ${activeTab === 'txns' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>All Transactions ({transactions.length})</span>
-            {activeTab === 'txns' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('outbox')}
-            class={`pb-3 transition relative ${activeTab === 'outbox' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>WhatsApp Outbox ({outbox.length})</span>
-            {activeTab === 'outbox' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('human')}
-            class={`pb-3 transition relative ${activeTab === 'human' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Human Queue ({escalations.length})</span>
-            {activeTab === 'human' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-          <button 
-            onClick={() => setActiveTab('simulator')}
-            class={`pb-3 transition relative ${activeTab === 'simulator' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
-          >
-            <span>Webhook Simulator (Live Test)</span>
-            {activeTab === 'simulator' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
-          </button>
-        </div>
+          {/* Right Column: Dynamic Workspace (Tabs & Form) */}
+          <div class="lg:col-span-7 flex flex-col overflow-hidden h-full">
+            {/* Tab Selection */}
+            <div class="border-b border-zinc-800 flex space-x-4 text-xs font-semibold shrink-0 overflow-x-auto pb-1 no-scrollbar">
+              <button 
+                onClick={() => setActiveTab('logs')}
+                class={`pb-2 transition relative shrink-0 ${activeTab === 'logs' ? 'text-emerald-400 font-extrabold' : 'text-zinc-400 hover:text-zinc-200'}`}
+              >
+                <span>Audit Log Trail</span>
+                {activeTab === 'logs' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+              </button>
+              <button 
+                onClick={() => setActiveTab('txns')}
+                class={`pb-2 transition relative shrink-0 ${activeTab === 'txns' ? 'text-emerald-400 font-extrabold' : 'text-zinc-400 hover:text-zinc-200'}`}
+              >
+                <span>All Transactions ({transactions.length})</span>
+                {activeTab === 'txns' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+              </button>
+              <button 
+                onClick={() => setActiveTab('outbox')}
+                class={`pb-2 transition relative shrink-0 ${activeTab === 'outbox' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+              >
+                <span>WhatsApp Outbox ({outbox.length})</span>
+                {activeTab === 'outbox' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+              </button>
+              <button 
+                onClick={() => setActiveTab('human')}
+                class={`pb-2 transition relative shrink-0 ${activeTab === 'human' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+              >
+                <span>Human Queue ({escalations.length})</span>
+                {activeTab === 'human' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+              </button>
+              <button 
+                onClick={() => setActiveTab('simulator')}
+                class={`pb-2 transition relative shrink-0 font-extrabold ${activeTab === 'simulator' ? 'text-emerald-400' : 'text-zinc-400 hover:text-zinc-200'}`}
+              >
+                <span class="flex items-center space-x-1.5">
+                  <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                  <span>Webhook Simulator (Live Test)</span>
+                </span>
+                {activeTab === 'simulator' && <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></span>}
+              </button>
+            </div>
 
-        {/* Tabs Contents */}
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            {/* Tabs Contents */}
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex-grow flex flex-col mt-4">
           {activeTab === 'logs' && (
-            <div class="overflow-x-auto">
+            <div class="overflow-auto flex-grow max-h-full">
               <table class="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr class="bg-zinc-800/40 border-b border-zinc-800 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
@@ -368,7 +381,7 @@ function App() {
           )}
 
           {activeTab === 'txns' && (
-            <div class="overflow-x-auto">
+            <div class="overflow-auto flex-grow max-h-full">
               <table class="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr class="bg-zinc-800/40 border-b border-zinc-800 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
@@ -417,7 +430,7 @@ function App() {
           )}
 
           {activeTab === 'outbox' && (
-            <div class="overflow-x-auto">
+            <div class="overflow-auto flex-grow max-h-full">
               <table class="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr class="bg-zinc-800/40 border-b border-zinc-800 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
@@ -448,7 +461,7 @@ function App() {
           )}
 
           {activeTab === 'human' && (
-            <div class="overflow-x-auto">
+            <div class="overflow-auto flex-grow max-h-full">
               <table class="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr class="bg-zinc-800/40 border-b border-zinc-800 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
@@ -483,7 +496,7 @@ function App() {
           )}
 
           {activeTab === 'simulator' && (
-            <div class="p-6 max-w-2xl mx-auto">
+            <div class="p-5 max-w-2xl mx-auto overflow-y-auto flex-grow max-h-full">
               <h3 class="text-lg font-bold mb-2 text-zinc-100">Simulate Razorpay Webhook Failure</h3>
               <p class="text-sm text-zinc-400 mb-6">
                 Fill in the details below to simulate a live `payment.failed` webhook event. 
