@@ -73,7 +73,7 @@ Recoup's core bet: **diagnose before you act.** A deterministic rules engine dec
 * 🌐 **Live Dashboard (Frontend)**: [https://recoup-seven-omega.vercel.app](https://recoup-seven-omega.vercel.app)
 * ⚙️ **Production API (Backend)**: [https://recoup-9wrh.onrender.com](https://recoup-9wrh.onrender.com)
 * 🗄️ **Production Database**: Neon Serverless Postgres Cloud
-* 🐙 **GitHub Repository**: [https://github.com/dola2164-png/Recoup](https://github.com/dola2164-png/Recoup)
+* 🐙 **GitHub Repository**: [https://github.com/dola2164-png/Recoup-Razorpay-Revenue-Recovery-Pipeline](https://github.com/dola2164-png/Recoup-Razorpay-Revenue-Recovery-Pipeline))
 
 ### 🧪 How Judges Can Test Live in 30 Seconds (No Code/Setup Required)
 We built a **Live Webhook Simulator** directly into the home page:
