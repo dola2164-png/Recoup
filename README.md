@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Recoup — root-cause revenue recovery for failed payments" width="100%">
+  <img alt="Recoup — root-cause revenue recovery for failed payments" width="100%">
 </p>
 
 <h1 align="center">Recoup</h1>
