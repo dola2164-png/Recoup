@@ -29,6 +29,42 @@ We have built a **Live Webhook Simulator** directly into the home page of the we
 4. Click **Audit Log Trail** in the header to view the live execution logs of the recovery pipeline in real time.
 5. Click **WhatsApp Outbox** in the header to see the personalized English/Hinglish copy drafted for the customer.
 6. Click **All Transactions** to inspect the overall metrics and transaction recovery status.
+---
+
+## 📂 Repository Directory Structure
+
+```text
+recoup/
+├── api/                   # FastAPI Backend Services
+│   ├── act.py             # Executes interventions (e.g. drafting Hinglish/English WhatsApp reminders)
+│   ├── db.py              # Neon cloud PostgreSQL database schema & connectivity
+│   ├── decide.py          # Deterministic Rules Engine (rules, limits, retry caps, escalation)
+│   ├── diagnose.py        # Failure classification (Rule-based lookup table + Groq fallback classification)
+│   ├── escalate.py        # Human review queue management functions
+│   ├── ingest.py          # FastAPI application routes & Razorpay Webhook listener
+│   └── track.py           # Appends and saves steps to the Central Audit Trail
+├── dashboard/             # Vite + React Frontend Dashboard
+│   ├── public/            # Static assets
+│   │   └── logo.png       # Custom brand header logo
+│   ├── src/               # React components and styling
+│   │   ├── App.jsx        # Complete Fintech Dashboard panel (KPIs, Simulator, Data Tables)
+│   │   ├── index.css      # Custom styling & scrollbar constraints
+│   │   └── main.jsx       # App entrypoint
+│   ├── index.html         # Main HTML document
+│   ├── package.json       # Node dependencies
+│   ├── tailwind.config.js # Tailwind CSS customization
+│   └── vite.config.js     # Vite builder configuration
+├── eval/                  # Simulation & Evaluation Scripts
+│   └── run_eval.py        # Runs batch tests against 52 transaction failures
+├── tests/                 # Unit & Integration Tests
+│   ├── test_decide.py     # Tests retry limits and deterministic state routing
+│   └── test_diagnose.py   # Tests classification routing and fallback responses
+├── demo/                  # Interactive demo scenarios
+│   └── staged_failure.md  # Step-by-step API resilience documentation
+├── .env.example           # Example configuration keys template
+├── README.md              # Project documentation
+└── requirements.txt       # Python library dependencies
+```
 
 ---
 
