@@ -92,14 +92,10 @@ We built a **Live Webhook Simulator** directly into the home page:
 ## Screenshots
 
 
-| Home — Webhook Simulator | Audit Log Trail |
-|:---:|:---:|
-| ![Home / Simulator](<img width="920" height="400" alt="Screenshot (661)" src="https://github.com/user-attachments/assets/41ea1791-9d47-4863-9d41-3f91ce65b6da" />
-) | ![Audit Log Trail](assets/screenshots/audit-log.png) |
+<img width="920" height="500" alt="Screenshot (663)" src="https://github.com/user-attachments/assets/39ea5723-f671-4b0b-b0f3-253dc2e7bbd6" />
+<img width="920" height="500" alt="Screenshot (662)" src="https://github.com/user-attachments/assets/0f223131-b89f-460b-a06d-a03f71b0bb0c" />
 
-| WhatsApp Outbox | All Transactions |
-|:---:|:---:|
-| ![WhatsApp Outbox](assets/screenshots/whatsapp-outbox.png) | ![All Transactions](assets/screenshots/all-transactions.png) |
+
 
 ---
 
