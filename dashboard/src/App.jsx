@@ -124,9 +124,7 @@ function App() {
       {/* Header */}
       <header class="border-b border-slate-200 bg-white sticky top-0 z-30 px-6 py-3 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shrink-0 shadow-sm">
         <div class="flex items-center space-x-3">
-          <div class="bg-blue-600 text-white p-2 rounded-lg font-black text-lg tracking-wider">
-            RE
-          </div>
+          <img src="/logo.png" alt="Recoup Logo" class="h-11 w-auto object-contain rounded-lg shadow-sm border border-slate-100" />
           <div>
             <h1 class="text-xl font-bold tracking-tight text-slate-900">Recoup</h1>
             <p class="text-xs text-slate-500">Razorpay Revenue Recovery Pipeline</p>
