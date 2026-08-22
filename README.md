@@ -126,7 +126,7 @@ graph TD
     G -- Under Limit --> I[Act: Execute Intervention]
     I -- instant_retry --> J[Razorpay Order API]
     I -- whatsapp_nudge --> K["🤖 Groq Copywriter: Hinglish / English — AI"]
-    I -- other --> L[Mock Payment Link / EMI Reschedule]
+    I -- other --> L[Razorpay Payment Link API]]
     K --> M[WhatsApp Outbox]
     J --> N[Track: Append to Central Audit Log]
     L --> N
@@ -140,7 +140,7 @@ graph TD
     class F rules;
     class H stop;
 ```
-
+> **Note:** the `payment_link` node calls Razorpay's API directly, using test-mode keys for the buildathon submission. Swapping in a live key is the only change needed to move this to production.
 **Legend:** 🟩 AI / LLM call (Groq) · 🟧 deterministic rules only — no LLM in this step · 🟥 hard stop → human handoff
 
 ---
@@ -169,7 +169,7 @@ What this demonstrates: the stop isn't an accident or an unhandled exception —
 ```text
 recoup/
 ├── api/                   # FastAPI backend services
-│   ├── act.py             # Executes interventions (e.g. drafting Hinglish/English WhatsApp reminders)
+│   ├── act.py             # Executes interventions (e.g. Executes interventions via Razorpay APIs + drafts WhatsApp copy)
 │   ├── db.py               # Neon cloud PostgreSQL schema & connectivity
 │   ├── decide.py           # Deterministic rules engine (limits, retry caps, escalation)
 │   ├── diagnose.py         # Failure classification (rule-based lookup + Groq fallback)
