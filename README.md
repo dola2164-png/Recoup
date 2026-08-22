@@ -222,6 +222,15 @@ This project enforces a hard boundary between generative/heuristic AI decisions 
 * **Drafting model**: `openai/gpt-oss-20b` — smaller, low-latency model for message copy generation.
 * Both run under a **5.0-second timeout** with automatic fallback to `needs_human_review`, so a slow model call never blocks the pipeline.
 
+### 🌍 Context-Aware Localization (English vs. Hinglish)
+A recovery nudge only works if the customer actually resonates with the message. Instead of rigid templates, Recoup uses a low-latency Groq model to draft personalized WhatsApp messages based on the customer profile and the specific failure reason. 
+
+It seamlessly switches between professional English for B2B clients and conversational Hinglish for retail users, matching how Indian merchants natively communicate.
+
+| Target Audience | Root Cause | AI-Drafted WhatsApp Nudge (Example) |
+| :--- | :--- | :--- |
+| **Enterprise / B2B** | `bank_server_timeout` | *"Dear Partner, your scheduled payment for Invoice #1244 (₹15,000) failed due to a temporary bank timeout. Please use the secure fallback link below to complete the transaction."* |
+| **Retail / D2C** | `insufficient_funds` | *"Hi Rahul, aapka ₹1,200 ka payment fail ho gaya hai. Shayad account mein balance kam tha. Naya link niche hai, aap dusre UPI app ya card se try kar sakte ho. 🙏"* |
 ---
 
 ## Evaluation Performance Metrics
