@@ -17,7 +17,6 @@
   <img src="https://img.shields.io/badge/Razorpay_Buildathon-AI_Revenue_Recovery_Track-0A1F44?style=flat-square" alt="Razorpay Buildathon">
 </p>
 
-Submission for the **Razorpay Buildathon — AI Revenue Recovery Track**.
 
 Recoup is an autonomous revenue recovery agent pipeline that detects failed or at-risk transactions, **diagnoses the root cause of failure** (not just the failure code), executes bounded recovery interventions (retries, localized WhatsApp reminders), tracks every step in a central append-only audit trail, and escalates unresolved cases to a human review queue.
 
