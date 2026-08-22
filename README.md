@@ -1,6 +1,6 @@
 <h1 align="center">Recoup</h1>
 <p align="center"><b>Root-Cause Revenue Recovery Agent for failed payments</b></p>
-Live :[https://recoup-seven-omega.vercel.app](https://recoup-seven-omega.vercel.app)
+<p align="center"><b>Live :[https://recoup-seven-omega.vercel.app](https://recoup-seven-omega.vercel.app)</b></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
